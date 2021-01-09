@@ -30,7 +30,7 @@ void init(){
 }
 
 void clrscr(){
-    //system("clear");
+    system("clear");
     return;
 }
 
@@ -334,8 +334,8 @@ void twoplayer(){
 
 int main(){
     init();
-    printglobal();
-    printgrid();
+    // printglobal();
+    // printgrid();
     twoplayer();
     
 
