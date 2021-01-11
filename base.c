@@ -280,7 +280,7 @@ int move(char player){
         curr=choice;
         checklocal();
         checkglobal(); 
-        editlocal();       
+        // editlocal();       
     }else{
         //the curr value has been taken.
         //Let them choose curr,
@@ -293,7 +293,7 @@ int move(char player){
         curr=choice;
         checklocal();
         checkglobal();
-        editlocal(); 
+        // editlocal(); 
     }
     return 0;
 }
