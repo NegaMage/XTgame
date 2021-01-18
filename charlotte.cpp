@@ -33,7 +33,7 @@ char winner;
 int input;
 float p1time, p2time;
 bool automated;
-vector<bool> nullGrids;
+vector<int> nullGrids;
 FILE *record;
 
 //Functions
@@ -153,7 +153,7 @@ void checkWinSlotRecent(){
     }
     else if(checkFilledGrid()){
         global[row][col]=null;
-        nullGrids[row*3+col]=true;
+        nullGrids.push_back(row*3+col);
     }
     else{
         global[row][col]=blank;
@@ -195,12 +195,16 @@ char checkGlobal(){
     }
 
     int t1, t2;
+    //Checking if current player can use null grids to win
     for(auto nullSlot: nullGrids){
         t1 = nullSlot/3;
-        t2 = nullSlot%3;
+        t2 = nullSlot%3;//could change to keypad format
         global[t1][t2]=player;
     }
     winner = checkGlobalHelper();
+
+    //If previous check fails, checking if other player
+    // can use null grids to win
     if(winner==blank){
         for(auto nullSlot: nullGrids){
             t1 = nullSlot/3;
@@ -209,6 +213,8 @@ char checkGlobal(){
         }
         winner = checkGlobalHelper();
     }
+
+    //Resetting null grids to previous state
     for(auto nullSlot: nullGrids){
         t1 = nullSlot/3;
         t2 = nullSlot%3;
@@ -220,6 +226,7 @@ char checkGlobal(){
 
 void numToRowCol(int num, int *row, int *col){
     //still calibrated to numpad
+    //may change to keypad
     *row = 2-(num-1)/3;
     *col = (num+2)%3;
 }
@@ -231,6 +238,9 @@ bool checkGrid(){
     }
     numToRowCol(grid, &row, &col);
     if(global[row][col]!=blank){
+        //printf("GRID NOT BLANK\n");
+        display();
+        //exit(0);
         return(true);
     }
     return(false);
@@ -332,19 +342,24 @@ bool oneMoveAutomated(int input, char player){
     // Plays one move in the automated game. 
     // Returns true when a move has been made succesfully. A move is 
     // classified as a defined slot in a playable grid.
+    // Dual use (grid and slot selection)
     if(grid==-1){
         // The grid hasn't been selected yet. Mark this event in the 
         // log file.
         grid=input;
+        //printf("grid not selected");
         return(false);
     }
     if(checkGrid()){
         // That grid has already been filled. Don't mark in logs.
+        //printf("grid filled");
+        grid = -1;
         return(false);
     }
     slot = input;
     if(checkSlot()){
-        // That slot in the grid has already been taken. 
+        // That slot in the grid has already been taken.
+        //printf("slot taken");
         return(false);
     }
     local[x][y]=player;
@@ -352,7 +367,7 @@ bool oneMoveAutomated(int input, char player){
     winner = checkGlobal();
     if(winner!=blank){
         printf("Game over! Player %c won!!\n\n", player);
-        return(false);
+        return(true);
     }
 
     grid=slot;
@@ -361,7 +376,7 @@ bool oneMoveAutomated(int input, char player){
         grid=-1;
     }
     display();
-    
+    //printf("returning true");
     return(true);
 }
 
@@ -379,21 +394,24 @@ void autoGame(){
         player = (moveNo%2==0) ? playerX : playerO;
 
         recentMove=rand()%9+1;
-        while(!oneMoveAutomated(recentMove, player)){
+        while(!oneMoveAutomated(recentMove, player)){           
             recentMove=rand()%9+1;
             cout<<moveNo<<":"<<recentMove<<"\n";
         }
         cout<<moveNo<<":"<<recentMove<<"\n";
-        fprintf(record, "%d%c%d ", grid, player, slot);
+        if(grid != -1)
+        {
+            fprintf(record, "%d%c%d\n ", grid, player, slot);
+        }
 
-        winner = checkGlobal();
         if(winner!=blank){
             fprintf(record, "W%c\n", winner);
             if(winner==null){
                 cout<<"IT'S A DRAW!!\n";
             }else
                 cout<<winner<<" HAS WON!!\n";
-            exit(0);
+            display();
+            return;
         }
         moveNo++;
     }
@@ -402,7 +420,7 @@ void autoGame(){
 
 
 int main(int argc, char *argv[]){
-    int iters = 1000;
+    int iters = 1;
     srand(time(0));
     record = fopen("file", "a");
 
@@ -410,12 +428,10 @@ int main(int argc, char *argv[]){
         cout<<"File not found.\n";
         return(1);
     } 
-    // while(iters--){
-    //     printf("Playing game %d\n", iters);
-    //     playAGame();
-    // }
-    playAGame();
-    // autoGame();
+    while(iters--){
+        printf("Playing game %d\n", iters);
+        autoGame();
+    }
     fclose(record);
     return 0;
 }
