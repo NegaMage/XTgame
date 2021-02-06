@@ -389,6 +389,7 @@ void autoGame(){
         if(moveNo>=90){
             display();
             cout<<"\n\nTOO MANY MOVES\n\n";
+            fprintf(record, "ERR_TOO_MANY_MOVES\n");
             exit(0);
         }
         player = (moveNo%2==0) ? playerX : playerO;
@@ -401,7 +402,7 @@ void autoGame(){
         cout<<moveNo<<":"<<recentMove<<"\n";
         if(grid != -1)
         {
-            fprintf(record, "%d%c%d\n ", grid, player, slot);
+            fprintf(record, "%d%c%d ", grid, player, slot);
         }
 
         if(winner!=blank){
@@ -421,8 +422,12 @@ void autoGame(){
 
 int main(int argc, char *argv[]){
     int iters = 1;
+    cout<<"Number of games to record:\n>> ";
+    cin>>iters;
+    
+    
     srand(time(0));
-    record = fopen("file", "a");
+    record = fopen("rawData/file", "a");
 
     if(record==NULL){
         cout<<"File not found.\n";
