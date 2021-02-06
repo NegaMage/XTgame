@@ -369,7 +369,7 @@ bool oneMoveAutomated(int input, char player){
         printf("Game over! Player %c won!!\n\n", player);
         return(true);
     }
-
+    fprintf(record, "%d%c%d ", grid, player, slot);
     grid=slot;
     numToRowCol(grid, &row, &col);
     if(global[row][col]!=blank){
@@ -397,12 +397,12 @@ void autoGame(){
         recentMove=rand()%9+1;
         while(!oneMoveAutomated(recentMove, player)){           
             recentMove=rand()%9+1;
-            cout<<moveNo<<":"<<recentMove<<"\n";
+            // cout<<moveNo<<":"<<recentMove<<"\n";
         }
-        cout<<moveNo<<":"<<recentMove<<"\n";
+        // cout<<moveNo<<":"<<recentMove<<"\n";
         if(grid != -1)
         {
-            fprintf(record, "%d%c%d ", grid, player, slot);
+            // fprintf(record, "%d%c%d ", grid, player, slot);
         }
 
         if(winner!=blank){
