@@ -380,6 +380,40 @@ bool oneMoveAutomated(int input, char player){
     return(true);
 }
 
+int Move_Method_one(){
+    int rando = rand()%21;
+    switch(rando){
+        case 0:
+        case 1:
+        case 2:
+        case 3: return 1;
+        
+        case 4:
+        case 5:
+        case 6:
+        case 7: return 3;
+
+        case  8 :
+        case  9 :
+        case  10 :
+        case  11 : return 7;
+
+        case  12 :
+        case  13 :
+        case  14 :
+        case  15 : return 9;
+
+        case  16 : return 2;
+        case  17 : return 4;
+        case  18 : return 6;
+        case  19 : return 8;
+
+        case  20 : return 5;
+    }
+
+    return 1;
+}
+
 void autoGame(){
     clearSlotsAndGrids();
     int moveNo=0;
@@ -394,9 +428,9 @@ void autoGame(){
         }
         player = (moveNo%2==0) ? playerX : playerO;
 
-        recentMove=rand()%9+1;
+        recentMove=Move_Method_one();
         while(!oneMoveAutomated(recentMove, player)){           
-            recentMove=rand()%9+1;
+            recentMove=Move_Method_one();
             // cout<<moveNo<<":"<<recentMove<<"\n";
         }
         // cout<<moveNo<<":"<<recentMove<<"\n";
@@ -427,7 +461,7 @@ int main(int argc, char *argv[]){
     
     
     srand(time(0));
-    record = fopen("rawData/file", "a");
+    record = fopen("rawData/file1", "a");
 
     if(record==NULL){
         cout<<"File not found.\n";
