@@ -379,40 +379,176 @@ bool oneMoveAutomated(int input, char player){
     //printf("returning true");
     return(true);
 }
-
+// corners>edges>center
 int Move_Method_one(){
     int rando = rand()%21;
-    switch(rando){
-        case 0:
-        case 1:
-        case 2:
-        case 3: return 1;
-        
-        case 4:
-        case 5:
-        case 6:
-        case 7: return 3;
-
-        case  8 :
-        case  9 :
-        case  10 :
-        case  11 : return 7;
-
-        case  12 :
-        case  13 :
-        case  14 :
-        case  15 : return 9;
-
-        case  16 : return 2;
-        case  17 : return 4;
-        case  18 : return 6;
-        case  19 : return 8;
-
-        case  20 : return 5;
+    if(rando >=0 && rando <=3 )
+    {
+        return 1;
     }
-
+    else if (rando >= 4 && rando <= 7)
+    {
+        return 3;
+    }
+    else if (rando >= 8 && rando <= 11)
+    {
+        return 7;
+    }
+    else if (rando >=12 && rando <= 15)
+    {
+        return 9;
+    }
+    else if (rando == 16)
+    {
+        return 2;
+    }
+    else if (rando == 17)
+    {
+        return 4;
+    }
+    else if (rando == 18)
+    {
+        return 6;
+    }
+    else if (rando == 19)
+    {
+        return 8;
+    }
+    else if (rando == 20)
+    {
+        return 5;
+    }
     return 1;
 }
+// corners>center>edges
+
+int Move_Method_two(){
+    int rando = rand()%21;
+    if(rando >=0 && rando <=3 )
+    {
+        return 1;
+    }
+    else if (rando >= 4 && rando <= 7)
+    {
+        return 3;
+    }
+    else if (rando >= 8 && rando <= 11)
+    {
+        return 7;
+    }
+    else if (rando >=12 && rando <= 15)
+    {
+        return 9;
+    }
+    else if (rando >= 16 && rando <= 19)
+    {
+        return 5;
+    }
+    else if (rando == 20)
+    {
+        return (rand()%4 + 1)*2;
+    }
+   
+    return 1;
+}
+
+// center>edges>corners
+
+int Move_Method_three(){
+    int rando = rand()%21;
+    if(rando >=0 && rando <= 15 )
+    {
+        return 5;
+    }
+    else if (rando >= 16 && rando <= 19)
+    {
+        return (rand()%4 + 1)*2 ;
+    }
+    else if (rando == 20)
+    {
+        return (rand()%4 + 1)*2 - 1 ;
+    }
+   
+    return 1;
+}
+// center>corners>edges
+
+int Move_Method_four(){
+    int rando = rand()%21;
+    if(rando >=0 && rando <= 15 )
+    {
+        return 5;
+    }
+    else if (rando >= 16 && rando <= 19)
+    {
+        return (rand()%4 + 1)*2 - 1 ;
+    }
+    else if (rando == 20)
+    {
+        return (rand()%4 + 1)*2 ;
+    }
+   
+    return 1;
+}
+// edges>center>corners
+
+int Move_Method_five(){
+    int rando = rand()%21;
+    if(rando >=0 && rando <= 15 )
+    {
+        return (rand()%4 + 1)*2;
+    }
+    else if (rando >= 16 && rando <= 19)
+    {
+        return 5 ;
+    }
+    else if (rando == 20)
+    {
+        return (rand()%4 + 1)*2 - 1 ;
+    }
+   
+    return 1;
+}
+// edges>corners>center
+
+int Move_Method_six(){
+    int rando = rand()%21;
+    if(rando >=0 && rando <= 15 )
+    {
+        return (rand()%4 + 1)*2;
+    }
+    else if (rando >= 16 && rando <= 19)
+    {
+        return (rand()%4 + 1)*2 - 1 ;
+    }
+    else if (rando == 20)
+    {
+        return 5 ;
+    }
+   
+    return 1;
+}
+
+int Strategy_mapper(int player)
+{
+    int strategy;
+    if(player == playerX)
+        strategy = strategyX;
+    else
+        strategy = strategyY;
+    switch (strategy)
+    {
+        case 1: return Move_method_one();
+                break;
+        case 3: return Move_method_three();
+                break;
+        case 5: return Move_method_five();
+                break;
+    }
+
+}
+
+
 
 void autoGame(){
     clearSlotsAndGrids();
@@ -428,7 +564,7 @@ void autoGame(){
         }
         player = (moveNo%2==0) ? playerX : playerO;
 
-        recentMove=Move_Method_one();
+        recentMove= Strategy_mapper(player);
         while(!oneMoveAutomated(recentMove, player)){           
             recentMove=Move_Method_one();
             // cout<<moveNo<<":"<<recentMove<<"\n";
