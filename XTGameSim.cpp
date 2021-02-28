@@ -18,6 +18,8 @@ using namespace std;
 #define playerO 'o'
 #define null '*'
 #define ll long long
+#define strategyX 1
+#define strategyO 5
 
 // Datastructures need to be global, no security concerns atm
 char local[9][9];
@@ -68,11 +70,13 @@ void printBoard(){
 void display(){
     if(!automated)
         clrscr();
+    /*
     cout<<"GLOBAL GRID\n";
     printGlobal();
     cout<<"GAMEBOARD\n";
     printBoard();
     printf("=============================\n");
+    */
 }
 
 void clearSlotsAndGrids(){
@@ -535,14 +539,14 @@ int Strategy_mapper(int player)
     if(player == playerX)
         strategy = strategyX;
     else
-        strategy = strategyY;
+        strategy = strategyO;
     switch (strategy)
     {
-        case 1: return Move_method_one();
+        case 1: return Move_Method_one();
                 break;
-        case 3: return Move_method_three();
+        case 3: return Move_Method_three();
                 break;
-        case 5: return Move_method_five();
+        case 5: return Move_Method_five();
                 break;
     }
 
@@ -566,7 +570,7 @@ void autoGame(){
 
         recentMove= Strategy_mapper(player);
         while(!oneMoveAutomated(recentMove, player)){           
-            recentMove=Move_Method_one();
+            recentMove=Strategy_mapper(player);
             // cout<<moveNo<<":"<<recentMove<<"\n";
         }
         // cout<<moveNo<<":"<<recentMove<<"\n";
@@ -578,9 +582,9 @@ void autoGame(){
         if(winner!=blank){
             fprintf(record, "W%c\n", winner);
             if(winner==null){
-                cout<<"IT'S A DRAW!!\n";
+                cout<<"IT'S A DRAW!!=============================================\n--------------------";
             }else
-                cout<<winner<<" HAS WON!!\n";
+                cout<<winner<<" HAS WON!!==============================================\n-------------------------------";
             display();
             return;
         }
@@ -597,7 +601,7 @@ int main(int argc, char *argv[]){
     
     
     srand(time(0));
-    record = fopen("rawData/file1", "a");
+    record = fopen("rawData/file_1_3", "a");
 
     if(record==NULL){
         cout<<"File not found.\n";
