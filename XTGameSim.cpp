@@ -18,8 +18,8 @@ using namespace std;
 #define playerO 'o'
 #define null '*'
 #define ll long long
-#define strategyX 1
-#define strategyO 5
+#define strategyX 5
+#define strategyO 0
 
 // Datastructures need to be global, no security concerns atm
 char local[9][9];
@@ -385,40 +385,40 @@ bool oneMoveAutomated(int input, char player){
 }
 // corners>edges>center
 int Move_Method_one(){
-    int rando = rand()%21;
-    if(rando >=0 && rando <=3 )
+    int rando = rand()%84;
+    if(rando >=0 && rando <=15 )
     {
         return 1;
     }
-    else if (rando >= 4 && rando <= 7)
+    else if (rando >= 16 && rando <= 31)
     {
         return 3;
     }
-    else if (rando >= 8 && rando <= 11)
+    else if (rando >= 32 && rando <= 47)
     {
         return 7;
     }
-    else if (rando >=12 && rando <= 15)
+    else if (rando >= 48 && rando <= 63)
     {
         return 9;
     }
-    else if (rando == 16)
+    else if (rando >= 64 && rando <= 67)
     {
         return 2;
     }
-    else if (rando == 17)
+    else if (rando >= 68 && rando <= 71)
     {
         return 4;
     }
-    else if (rando == 18)
+    else if (rando >= 72 && rando <= 75)
     {
         return 6;
     }
-    else if (rando == 19)
+    else if (rando >= 76 && rando <= 79)
     {
         return 8;
     }
-    else if (rando == 20)
+    else if (rando >= 80 && rando <= 83)
     {
         return 5;
     }
@@ -427,30 +427,42 @@ int Move_Method_one(){
 // corners>center>edges
 
 int Move_Method_two(){
-    int rando = rand()%21;
-    if(rando >=0 && rando <=3 )
+    int rando = rand()%84;
+    if(rando >=0 && rando <=15 )
     {
         return 1;
     }
-    else if (rando >= 4 && rando <= 7)
+    else if (rando >= 16 && rando <= 31)
     {
         return 3;
     }
-    else if (rando >= 8 && rando <= 11)
+    else if (rando >= 32 && rando <= 47)
     {
         return 7;
     }
-    else if (rando >=12 && rando <= 15)
+    else if (rando >=48 && rando <= 63)
     {
         return 9;
     }
-    else if (rando >= 16 && rando <= 19)
+    else if (rando >= 64 && rando <= 79)
     {
         return 5;
     }
-    else if (rando == 20)
+    else if (rando == 80)
     {
-        return (rand()%4 + 1)*2;
+        return 2;
+    }
+    else if (rando == 81)
+    {
+        return 4;
+    }
+    else if (rando == 82)
+    {
+        return 6;
+    }
+    else if (rando == 83)
+    {
+        return 8;
     }
    
     return 1;
@@ -459,18 +471,42 @@ int Move_Method_two(){
 // center>edges>corners
 
 int Move_Method_three(){
-    int rando = rand()%21;
-    if(rando >=0 && rando <= 15 )
+    int rando = rand()%84;
+    if(rando >=0 && rando <= 63 )
     {
         return 5;
     }
-    else if (rando >= 16 && rando <= 19)
+    else if (rando >= 64 && rando <= 67)
     {
-        return (rand()%4 + 1)*2 ;
+        return 2 ;
     }
-    else if (rando == 20)
+    else if (rando >= 68 && rando <=71)
     {
-        return (rand()%4 + 1)*2 - 1 ;
+        return 4 ;
+    }
+    else if (rando >= 72 && rando <= 75 )
+    {
+        return 6;
+    }
+    else if (rando >= 76 && rando <= 79)
+    {
+        return 8;
+    }
+    else if (rando == 80)
+    {
+        return 1;
+    }
+    else if (rando == 81)
+    {
+        return 3;
+    }
+    else if (rando == 82)
+    {
+        return 7;
+    }
+    else if (rando == 83)
+    {
+        return 9;
     }
    
     return 1;
@@ -478,37 +514,84 @@ int Move_Method_three(){
 // center>corners>edges
 
 int Move_Method_four(){
-    int rando = rand()%21;
-    if(rando >=0 && rando <= 15 )
+    int rando = rand()%84;
+    if(rando >=0 && rando <= 63 )
     {
         return 5;
     }
-    else if (rando >= 16 && rando <= 19)
+    else if (rando >= 64 && rando <= 67)
     {
-        return (rand()%4 + 1)*2 - 1 ;
+        return 1;
     }
-    else if (rando == 20)
+    else if (rando >= 68 && rando <= 71)
     {
-        return (rand()%4 + 1)*2 ;
+        return 3;
     }
-   
+    else if (rando >= 72 && rando <= 75)
+    {
+        return 7;
+    }
+    else if (rando >= 76 && rando <= 79)
+    {
+        return 9;
+    }
+    else if (rando == 80)
+    {
+        return 2;
+    }
+    else if (rando == 81)
+    {
+        return 4;
+    }
+    else if (rando == 82)
+    {
+        return 6;
+    }
+    else if (rando == 83)
+    {
+        return 8;
+    }
     return 1;
 }
 // edges>center>corners
 
 int Move_Method_five(){
-    int rando = rand()%21;
+    int rando = rand()%84;
     if(rando >=0 && rando <= 15 )
     {
-        return (rand()%4 + 1)*2;
+        return 2;
     }
-    else if (rando >= 16 && rando <= 19)
+    else if (rando >= 16 && rando <= 31)
     {
-        return 5 ;
+        return 4 ;
     }
-    else if (rando == 20)
+    else if (rando == 32 && rando <= 47)
     {
-        return (rand()%4 + 1)*2 - 1 ;
+        return 6 ;
+    }
+    else if (rando == 48 && rando <= 63)
+    {
+        return 8;
+    }
+    else if (rando >= 64 && rando <= 79)
+    {
+        return 5;
+    }
+    else if (rando == 80)
+    {
+        return 1;
+    }
+    else if (rando == 81)
+    {
+        return 3;
+    }
+    else if (rando == 82)
+    {
+        return 7;
+    }
+    else if (rando == 83)
+    {
+        return 9;
     }
    
     return 1;
@@ -516,18 +599,42 @@ int Move_Method_five(){
 // edges>corners>center
 
 int Move_Method_six(){
-    int rando = rand()%21;
+    int rando = rand()%84;
     if(rando >=0 && rando <= 15 )
     {
-        return (rand()%4 + 1)*2;
+        return 2;
     }
-    else if (rando >= 16 && rando <= 19)
+    else if (rando >= 16 && rando <= 31)
     {
-        return (rand()%4 + 1)*2 - 1 ;
+        return 4;
     }
-    else if (rando == 20)
+    else if (rando >= 32 && rando <= 47)
     {
-        return 5 ;
+        return 6 ;
+    }
+    else if (rando >= 48 && rando <= 63)
+    {
+        return 8;
+    }
+    else if (rando >= 64 && rando <=67)
+    {
+        return 1;
+    }
+    else if (rando >= 68 && rando <= 71)
+    {
+        return 3;
+    }
+    else if (rando >= 72 && rando <= 75)
+    {
+        return 7;
+    }
+    else if (rando >= 76 && rando <= 79)
+    {
+        return 9;
+    }
+    else if (rando >= 80 && rando <= 83)
+    {
+        return 5;
     }
    
     return 1;
@@ -542,6 +649,8 @@ int Strategy_mapper(int player)
         strategy = strategyO;
     switch (strategy)
     {
+        case 0: return rand()%9 + 1;
+                break;
         case 1: return Move_Method_one();
                 break;
         case 3: return Move_Method_three();
@@ -601,7 +710,7 @@ int main(int argc, char *argv[]){
     
     
     srand(time(0));
-    record = fopen("rawData/file_1_3", "a");
+    record = fopen("rawData/file_5_0", "a");
 
     if(record==NULL){
         cout<<"File not found.\n";

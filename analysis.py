@@ -1,6 +1,6 @@
-types = [1,2,3]
+types = [0,1,3,5]
 
-strings = [str(i)+"_"+str(j) for i in types for j in types]
+strings = ["file_"+str(i)+"_"+str(j) for i in types for j in types]
 
 print(strings)
 
@@ -23,16 +23,44 @@ for name in strings:
         'o': 0,
         '*': 0
     }
+    avg_lengths = {
+         'x': 0,
+         'o': 0,
+         '*': 0
+    }
+
+    x_count = 0
+    x_length = 0
+    o_count = 0
+    o_length = 0
+    d_count = 0
+    d_length = 0
 
     for game in res:
         if game: # game is not empty string
             game = game.split(" ")
             wins[game[-1][-1]]+=1
             lens[game[-1][-1]]+=len(game)-1
+            if game[-1][-1] == 'x':
+                x_count += 1
+                x_length += len(game) - 1
+            elif game[-1][-1] == 'o':
+                o_count += 1
+                o_length += len(game) - 1
+            elif game[-1][-1] == '*':
+                d_count += 1
+                d_length += len(game) - 1
+
+    avg_lengths['x'] = x_length / x_count
+    avg_lengths['o'] = o_length / o_count
+    avg_lengths['*'] = d_length / d_count
     
     print("Number of wins:")
     print(wins)
 
     print("Number of steps taken:")
     print(lens)
+
+    print(" Average game lengths to win:")
+    print(avg_lengths)
 
