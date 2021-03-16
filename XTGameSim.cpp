@@ -643,36 +643,6 @@ int Move_Method_six(){
     return 1;
 }
 
-int Strategy_mapper(int player)
-{
-    int strategy;
-    if(player == playerX)
-        strategy = strategyX;
-    else
-        strategy = strategyO;
-    switch (strategy)
-    {
-        case 0: return rand()%9 + 1;
-                break;
-        case 1: return Move_Method_one();
-                break;
-        case 3: return Move_Method_three();
-                break;
-        case 5: return Move_Method_five();
-                break;
-        case 7: return Move_method_seven();
-                break;
-        case 8: return Move_method_eight();
-                break;
-        case 9: return Move_method_nine();
-                break;
-        case 10: return Move_method_ten();
-                break;
-        case 11: return Move_method_eleven;
-                break;
-    }
-
-}
 int Move_method_seven()
 {
     return (rand()%6 + 1)*2 -1;
@@ -693,7 +663,7 @@ int Move_method_nine()
         }
         else if (recentMove == 3)
         {
-            remove 7;
+            return 7;
         }
         else if (recentMove == 9)
         {
@@ -729,7 +699,7 @@ int Move_method_eleven()
         int option = 5;
         while(option != 5)
         {
-            option = (rand()%6 + 1)*2 -1
+            option = (rand()%6 + 1)*2 -1;
         }
         return option;
     }
@@ -744,8 +714,8 @@ int Move_method_eleven()
     return 1;}
 void Move_Method_ten_prep(int player)
 {
-    int options[4] = {1,3,7,9}
-    int picked[4] = {0,0,0,0}
+    int options[4] = {1,3,7,9};
+    int picked[4] = {0,0,0,0};
     int numpicked = 0;
         while(numpicked < 2)
         {
@@ -768,6 +738,38 @@ void Move_Method_ten_prep(int player)
 
 }
 
+int Strategy_mapper(int player)
+{
+    int strategy;
+    if(player == playerX)
+        strategy = strategyX;
+    else
+        strategy = strategyO;
+    switch (strategy)
+    {
+        case 0: return rand()%9 + 1;
+                break;
+        case 1: return Move_Method_one();
+                break;
+        case 3: return Move_Method_three();
+                break;
+        case 5: return Move_Method_five();
+                break;
+        case 7: return Move_method_seven();
+                break;
+        case 8: return Move_method_eight();
+                break;
+        case 9: return Move_method_nine();
+                break;
+        case 10: return Move_method_ten(player);
+                break;
+        case 11: return Move_method_eleven();
+                break;
+    }
+
+}
+
+
 
 
 void autoGame(){
@@ -783,7 +785,7 @@ void autoGame(){
         }
         if(strategyO == 10)
         {
-            Move_Method_ten_prep(playerY);
+            Move_Method_ten_prep(playerO);
         }
     }
 
