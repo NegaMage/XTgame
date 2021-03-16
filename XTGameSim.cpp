@@ -7,6 +7,7 @@ playable version to making a version that can run from RNG.
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <string>
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
@@ -18,8 +19,7 @@ using namespace std;
 #define playerO 'o'
 #define null '*'
 #define ll long long
-#define strategyX 5
-#define strategyO 0
+
 
 // Datastructures need to be global, no security concerns atm
 char local[9][9];
@@ -40,6 +40,8 @@ int X_3_corners[3];
 int O_3_corners[3];
 bool strat_10;
 FILE *record;
+int strategyX = 5;
+int strategyO = 0;
 
 //Functions
 void clrscr(){
@@ -711,31 +713,32 @@ int Move_method_eleven()
     {
         return (rand()%4+1)*2 ;
     }
-    return 1;}
+    return 1;
+}
+
 void Move_Method_ten_prep(int player)
 {
     int options[4] = {1,3,7,9};
     int picked[4] = {0,0,0,0};
     int numpicked = 0;
-        while(numpicked < 2)
+    while(numpicked < 2)
+    {
+        int index = rand()%4;
+        if (!picked[index])
         {
-            int index = rand()%4;
-            if (!picked[index])
+            if(player == playerX)
             {
-                if(player == playerX)
-                {
-                 X_3_corners[numpicked] = options[index];
-                }
-                else
-                {
-                 O_3_corners[numpicked] = options[index];
-                }
-                ++numpicked;
-
+                X_3_corners[numpicked] = options[index];
             }
+            else
+            {
+                O_3_corners[numpicked] = options[index];
+            }
+            ++numpicked;
 
         }
 
+    }
 }
 
 int Strategy_mapper(int player)
@@ -751,9 +754,15 @@ int Strategy_mapper(int player)
                 break;
         case 1: return Move_Method_one();
                 break;
+        case 2: return Move_Method_two();
+                break;
         case 3: return Move_Method_three();
                 break;
+        case 4: return Move_Method_four();
+                break;
         case 5: return Move_Method_five();
+                break;
+        case 6: return Move_Method_six();
                 break;
         case 7: return Move_method_seven();
                 break;
@@ -828,10 +837,14 @@ int main(int argc, char *argv[]){
     int iters = 1;
     cout<<"Number of games to record:\n>> ";
     cin>>iters;
-    
+    cin>>strategyX>>strategyO;
     
     srand(time(0));
-    record = fopen("rawData/file_5_0", "a");
+    string filepath = "rawData/";
+    filepath.append(to_string(strategyX));
+    filepath.append("_");
+    filepath.append(to_string(strategyO));
+    record = fopen(filepath.c_str(), "w");
 
     if(record==NULL){
         cout<<"File not found.\n";
