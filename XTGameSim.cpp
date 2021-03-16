@@ -36,6 +36,9 @@ int input;
 float p1time, p2time;
 bool automated;
 vector<int> nullGrids;
+int X_3_corners[3];
+int O_3_corners[3];
+bool strat_10;
 FILE *record;
 
 //Functions
@@ -657,7 +660,111 @@ int Strategy_mapper(int player)
                 break;
         case 5: return Move_Method_five();
                 break;
+        case 7: return Move_method_seven();
+                break;
+        case 8: return Move_method_eight();
+                break;
+        case 9: return Move_method_nine();
+                break;
+        case 10: return Move_method_ten();
+                break;
+        case 11: return Move_method_eleven;
+                break;
     }
+
+}
+int Move_method_seven()
+{
+    return (rand()%6 + 1)*2 -1;
+}
+
+int Move_method_eight()
+{
+    return (rand()%4 +1)*2;
+}
+
+int Move_method_nine()
+{
+    if( recentMove%2 && recentMove!=5)
+    {
+        if(recentMove == 7)
+        {
+            return 3;
+        }
+        else if (recentMove == 3)
+        {
+            remove 7;
+        }
+        else if (recentMove == 9)
+        {
+            return 1;
+        }
+        else if (recentMove == 1)
+        {
+            return 9;
+        }
+    }
+    return (rand()%4 + 1) * 2;
+}
+
+
+int Move_method_ten(int player)
+{
+    int index = rand() % 3;
+    if (player == playerX)
+    {
+        return X_3_corners[index];
+    }
+    else
+    {
+        return O_3_corners[index];
+    }
+}
+
+int Move_method_eleven()
+{
+    int rando = rand()%84;
+    if(rando >=0 && rando <= 27 )
+    {
+        int option = 5;
+        while(option != 5)
+        {
+            option = (rand()%6 + 1)*2 -1
+        }
+        return option;
+    }
+    else if (rando >= 28 && rando <= 55)
+    {
+        return 5;
+    }
+    else if (rando >= 56 && rando <= 83)
+    {
+        return (rand()%4+1)*2 ;
+    }
+    return 1;}
+void Move_Method_ten_prep(int player)
+{
+    int options[4] = {1,3,7,9}
+    int picked[4] = {0,0,0,0}
+    int numpicked = 0;
+        while(numpicked < 2)
+        {
+            int index = rand()%4;
+            if (!picked[index])
+            {
+                if(player == playerX)
+                {
+                 X_3_corners[numpicked] = options[index];
+                }
+                else
+                {
+                 O_3_corners[numpicked] = options[index];
+                }
+                ++numpicked;
+
+            }
+
+        }
 
 }
 
@@ -667,6 +774,18 @@ void autoGame(){
     clearSlotsAndGrids();
     int moveNo=0;
     automated=true;
+    if (strategyO == 10 || strategyX == 10)
+    {
+        strat_10 = true;
+        if(strategyX == 10)
+        {
+            Move_Method_ten_prep(playerX);
+        }
+        if(strategyO == 10)
+        {
+            Move_Method_ten_prep(playerY);
+        }
+    }
 
     while(winner==blank){
         if(moveNo>=90){
