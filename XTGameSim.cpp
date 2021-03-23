@@ -20,6 +20,8 @@ using namespace std;
 #define null '*'
 #define ll long long
 
+vector<int> X_priorities(9);
+vector<int> O_priorities(9);
 
 // Datastructures need to be global, no security concerns atm
 char local[9][9];
@@ -75,13 +77,13 @@ void printBoard(){
 void display(){
     if(!automated)
         clrscr();
-    /*
+
     cout<<"GLOBAL GRID\n";
     printGlobal();
     cout<<"GAMEBOARD\n";
     printBoard();
     printf("=============================\n");
-    */
+
 }
 
 void clearSlotsAndGrids(){
@@ -645,101 +647,222 @@ int Move_Method_six(){
     return 1;
 }
 
-int Move_method_seven()
-{
-    return (rand()%6 + 1)*2 -1;
-}
-
-int Move_method_eight()
-{
-    return (rand()%4 +1)*2;
-}
-
-int Move_method_nine()
-{
-    if( recentMove%2 && recentMove!=5)
-    {
-        if(recentMove == 7)
-        {
-            return 3;
-        }
-        else if (recentMove == 3)
-        {
-            return 7;
-        }
-        else if (recentMove == 9)
-        {
-            return 1;
-        }
-        else if (recentMove == 1)
-        {
-            return 9;
-        }
-    }
-    return (rand()%4 + 1) * 2;
-}
-
-
-int Move_method_ten(int player)
-{
-    int index = rand() % 3;
-    if (player == playerX)
-    {
-        return X_3_corners[index];
-    }
-    else
-    {
-        return O_3_corners[index];
-    }
-}
-
-int Move_method_eleven()
-{
-    int rando = rand()%84;
-    if(rando >=0 && rando <= 27 )
-    {
-        int option = 5;
-        while(option != 5)
-        {
-            option = (rand()%6 + 1)*2 -1;
-        }
-        return option;
-    }
-    else if (rando >= 28 && rando <= 55)
-    {
+int seven_top_right(){
+    int temp = rand()%22;
+    if(temp==0){
         return 5;
+    }else if(temp==1){
+        return 4;
+    }else if(temp==2){
+        return 6;
+    }else if(temp==3){
+        return 8;
+    }else if(temp==4){
+        return 2;
+    }else if(temp==5){
+        return 1;
+    }else if(temp>=6 && temp <= 9){
+        return 7;
+    }else if(temp>=10 && temp <= 13){
+        return 3;
+    }else{
+        return 9;
     }
-    else if (rando >= 56 && rando <= 83)
-    {
-        return (rand()%4+1)*2 ;
-    }
-    return 1;
+    return rand()%9+1;//never really used.
 }
 
-void Move_Method_ten_prep(int player)
-{
-    int options[4] = {1,3,7,9};
-    int picked[4] = {0,0,0,0};
-    int numpicked = 0;
-    while(numpicked < 2)
-    {
-        int index = rand()%4;
-        if (!picked[index])
-        {
-            if(player == playerX)
-            {
-                X_3_corners[numpicked] = options[index];
-            }
-            else
-            {
-                O_3_corners[numpicked] = options[index];
-            }
-            ++numpicked;
+int seven_top_left(){
+    int temp = rand()%22;
+    if(temp==0){
+        return 5;
+    }else if(temp==1){
+        return 4;
+    }else if(temp==2){
+        return 6;
+    }else if(temp==3){
+        return 8;
+    }else if(temp==4){
+        return 2;
+    }else if(temp==5){
+        return 3;
+    }else if(temp>=6 && temp <= 9){
+        return 9;
+    }else if(temp>=10 && temp <= 13){
+        return 1;
+    }else{
+        return 7;
+    }
+    return rand()%9+1;//never really used.
+}
 
+int seven_bottom_left(){
+    int temp = rand()%22;
+    if(temp==0){
+        return 5;
+    }else if(temp==1){
+        return 4;
+    }else if(temp==2){
+        return 6;
+    }else if(temp==3){
+        return 8;
+    }else if(temp==4){
+        return 2;
+    }else if(temp==5){
+        return 9;
+    }else if(temp>=6 && temp <= 9){
+        return 7;
+    }else if(temp>=10 && temp <= 13){
+        return 3;
+    }else{
+        return 1;
+    }
+    return rand()%9+1;//never really used.
+}
+
+int seven_bottom_right(){
+    int temp = rand()%22;
+    if(temp==0){
+        return 5;
+    }else if(temp==1){
+        return 4;
+    }else if(temp==2){
+        return 6;
+    }else if(temp==3){
+        return 8;
+    }else if(temp==4){
+        return 2;
+    }else if(temp==5){
+        return 7;
+    }else if(temp>=6 && temp <= 9){
+        return 9;
+    }else if(temp>=10 && temp <= 13){
+        return 1;
+    }else{
+        return 3;
+    }
+    return rand()%9+1;//never really used.
+}
+
+int Move_method_seven(char player){
+    if(player==playerX){
+        int temp = X_priorities[grid-1];
+        switch(temp){
+            case 0: return seven_top_right();
+
+            case 1: return seven_bottom_right();
+
+            case 2: return seven_bottom_left();
+
+            case 3: return seven_top_left();
         }
 
+        return seven_top_left();
+    }else{
+        int temp = O_priorities[grid-1];
+        switch(temp){
+            case 0: return seven_top_right();
+
+            case 1: return seven_bottom_right();
+
+            case 2: return seven_bottom_left();
+
+            case 3: return seven_top_left();
+        }
+
+        return seven_top_left();
     }
 }
+
+// int Move_method_eight()
+// {
+//     return (rand()%4 +1)*2;
+// }
+
+// int Move_method_nine()
+// {
+//     if( recentMove%2 && recentMove!=5)
+//     {
+//         if(recentMove == 7)
+//         {
+//             return 3;
+//         }
+//         else if (recentMove == 3)
+//         {
+//             return 7;
+//         }
+//         else if (recentMove == 9)
+//         {
+//             return 1;
+//         }
+//         else if (recentMove == 1)
+//         {
+//             return 9;
+//         }
+//     }
+//     return (rand()%4 + 1) * 2;
+// }
+
+
+// int Move_method_ten(int player)
+// {
+//     int index = rand() % 3;
+//     if (player == playerX)
+//     {
+//         return X_3_corners[index];
+//     }
+//     else
+//     {
+//         return O_3_corners[index];
+//     }
+// }
+
+// int Move_method_eleven()
+// {
+//     int rando = rand()%84;
+//     if(rando >=0 && rando <= 27 )
+//     {
+//         int option = 5;
+//         while(option != 5)
+//         {
+//             option = (rand()%6 + 1)*2 -1;
+//         }
+//         return option;
+//     }
+//     else if (rando >= 28 && rando <= 55)
+//     {
+//         return 5;
+//     }
+//     else if (rando >= 56 && rando <= 83)
+//     {
+//         return (rand()%4+1)*2 ;
+//     }
+//     return 1;
+// }
+
+// void Move_Method_ten_prep(int player)
+// {
+//     int options[4] = {1,3,7,9};
+//     int picked[4] = {0,0,0,0};
+//     int numpicked = 0;
+//     while(numpicked < 2)
+//     {
+//         int index = rand()%4;
+//         if (!picked[index])
+//         {
+//             if(player == playerX)
+//             {
+//                 X_3_corners[numpicked] = options[index];
+//             }
+//             else
+//             {
+//                 O_3_corners[numpicked] = options[index];
+//             }
+//             ++numpicked;
+
+//         }
+
+//     }
+// }
 
 int Strategy_mapper(int player)
 {
@@ -764,16 +887,16 @@ int Strategy_mapper(int player)
                 break;
         case 6: return Move_Method_six();
                 break;
-        case 7: return Move_method_seven();
+        case 7: return Move_method_seven(player);
                 break;
-        case 8: return Move_method_eight();
-                break;
-        case 9: return Move_method_nine();
-                break;
-        case 10: return Move_method_ten(player);
-                break;
-        case 11: return Move_method_eleven();
-                break;
+        // case 8: return Move_method_eight();
+        //         break;
+        // case 9: return Move_method_nine();
+        //         break;
+        // case 10: return Move_method_ten(player);
+        //         break;
+        // case 11: return Move_method_eleven();
+        //         break;
     }
 
 }
@@ -785,18 +908,24 @@ void autoGame(){
     clearSlotsAndGrids();
     int moveNo=0;
     automated=true;
-    if (strategyO == 10 || strategyX == 10)
-    {
-        strat_10 = true;
-        if(strategyX == 10)
-        {
-            Move_Method_ten_prep(playerX);
-        }
-        if(strategyO == 10)
-        {
-            Move_Method_ten_prep(playerO);
-        }
+    // if (strategyO == 10 || strategyX == 10)
+    // {
+    //     strat_10 = true;
+    //     if(strategyX == 10)
+    //     {
+    //         Move_Method_ten_prep(playerX);
+    //     }
+    //     if(strategyO == 10)
+    //     {
+    //         Move_Method_ten_prep(playerO);
+    //     }
+    // }
+
+    for(int i=0;i<9;i++){
+        X_priorities[i]=rand()%4;
+        O_priorities[i]=rand()%4;
     }
+    
 
     while(winner==blank){
         if(moveNo>=90){
@@ -817,14 +946,14 @@ void autoGame(){
         {
             // fprintf(record, "%d%c%d ", grid, player, slot);
         }
-
+        // display();
         if(winner!=blank){
             fprintf(record, "W%c\n", winner);
             if(winner==null){
-                cout<<"IT'S A DRAW!!=============================================\n--------------------";
+                cout<<"IT'S A DRAW!!=============================================\n--------------------\n";
             }else
-                cout<<winner<<" HAS WON!!==============================================\n-------------------------------";
-            display();
+                cout<<winner<<" HAS WON!!==============================================\n-------------------------------\n";
+            // display();
             return;
         }
         moveNo++;
@@ -838,6 +967,8 @@ int main(int argc, char *argv[]){
     cout<<"Number of games to record:\n>> ";
     cin>>iters;
     cin>>strategyX>>strategyO;
+    // strategyX = 7;
+    // strategyO = 7;
     
     srand(time(0));
     string filepath = "rawData/";
