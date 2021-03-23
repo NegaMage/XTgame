@@ -250,7 +250,7 @@ bool checkGrid(){
     numToRowCol(grid, &row, &col);
     if(global[row][col]!=blank){
         //printf("GRID NOT BLANK\n");
-        display();
+        // display();
         //exit(0);
         return(true);
     }
@@ -386,7 +386,7 @@ bool oneMoveAutomated(int input, char player){
     if(global[row][col]!=blank){
         grid=-1;
     }
-    display();
+    // display();
     //printf("returning true");
     return(true);
 }
@@ -953,7 +953,7 @@ void autoGame(){
                 cout<<"IT'S A DRAW!!=============================================\n--------------------\n";
             }else
                 cout<<winner<<" HAS WON!!==============================================\n-------------------------------\n";
-            // display();
+            display();
             return;
         }
         moveNo++;
