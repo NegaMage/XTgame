@@ -648,97 +648,97 @@ int Move_Method_six(){
 }
 
 int seven_top_right(){
-    int temp = rand()%22;
-    if(temp==0){
+    int temp = rand()%25;
+    if(temp<=1){
         return 5;
-    }else if(temp==1){
-        return 4;
-    }else if(temp==2){
-        return 6;
-    }else if(temp==3){
+    }else if(temp<=3){
         return 8;
-    }else if(temp==4){
-        return 2;
-    }else if(temp==5){
-        return 1;
-    }else if(temp>=6 && temp <= 9){
+    }else if(temp<=5){
+        return 6;
+    }else if(temp<=9){
         return 7;
-    }else if(temp>=10 && temp <= 13){
+    }else if(temp<=13){
         return 3;
-    }else{
+    }else if(temp<=21){
         return 9;
+    }else if(temp==22){
+        return 4;
+    }else if(temp==23){
+        return 2;
+    }else{
+        return 1;
     }
     return rand()%9+1;//never really used.
 }
 
 int seven_top_left(){
-    int temp = rand()%22;
-    if(temp==0){
+    int temp = rand()%25;
+    if(temp<=1){
         return 5;
-    }else if(temp==1){
-        return 4;
-    }else if(temp==2){
-        return 6;
-    }else if(temp==3){
+    }else if(temp<=3){
         return 8;
-    }else if(temp==4){
-        return 2;
-    }else if(temp==5){
-        return 3;
-    }else if(temp>=6 && temp <= 9){
-        return 9;
-    }else if(temp>=10 && temp <= 13){
+    }else if(temp<=5){
+        return 4;
+    }else if(temp<=9){
         return 1;
-    }else{
+    }else if(temp<=13){
+        return 9;
+    }else if(temp<=21){
         return 7;
+    }else if(temp==22){
+        return 6;
+    }else if(temp==23){
+        return 2;
+    }else{
+        return 3;
     }
     return rand()%9+1;//never really used.
 }
 
 int seven_bottom_left(){
-    int temp = rand()%22;
-    if(temp==0){
+    int temp = rand()%25;
+    if(temp<=1){
         return 5;
-    }else if(temp==1){
+    }else if(temp<=3){
         return 4;
-    }else if(temp==2){
-        return 6;
-    }else if(temp==3){
-        return 8;
-    }else if(temp==4){
+    }else if(temp<=5){
         return 2;
-    }else if(temp==5){
-        return 9;
-    }else if(temp>=6 && temp <= 9){
+    }else if(temp<=9){
         return 7;
-    }else if(temp>=10 && temp <= 13){
+    }else if(temp<=13){
         return 3;
-    }else{
+    }else if(temp<=21){
         return 1;
+    }else if(temp==22){
+        return 8;
+    }else if(temp==23){
+        return 6;
+    }else{
+        return 9;
     }
     return rand()%9+1;//never really used.
 }
 
 int seven_bottom_right(){
-    int temp = rand()%22;
-    if(temp==0){
+    int temp = rand()%25;
+    if(temp<=1){
         return 5;
-    }else if(temp==1){
-        return 4;
-    }else if(temp==2){
-        return 6;
-    }else if(temp==3){
-        return 8;
-    }else if(temp==4){
+    }else if(temp<=3){
         return 2;
-    }else if(temp==5){
-        return 7;
-    }else if(temp>=6 && temp <= 9){
-        return 9;
-    }else if(temp>=10 && temp <= 13){
+    }else if(temp<=5){
+        return 6;
+    }else if(temp<=9){
         return 1;
-    }else{
+    }else if(temp<=13){
+        return 9;
+    }else if(temp<=21){
         return 3;
+    }else if(temp==22){
+        return 4;
+    }else if(temp==23){
+        return 8;
+    }else{
+        return 7;
     }
     return rand()%9+1;//never really used.
 }
