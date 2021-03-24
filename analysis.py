@@ -22,7 +22,7 @@ for i in types:
 
         os.system('./a.out < test')
 
-print(strings)
+#print(strings)
 data_t1 = {}
 data_t2 = {}
 data_t3 = {}
