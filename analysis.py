@@ -12,6 +12,11 @@ strings = [str(i)+"_"+str(j) for i in types for j in types]
 
 # os.system('./a.out < test')
 
+n_collisions = 0
+n_same_file_collisions = 0
+n_diff_file_collisions = 0
+game_dict = dict()
+
 
 
 for i in types:
@@ -64,8 +69,26 @@ for name in strings:
     o_length = 0
     d_count = 0
     d_length = 0
-
+    print(res[0])
     for game in res:
+        if game in game_dict.keys():
+            if game_dict[game] == name:
+                num = res.count(game)
+                n_collisions += num
+                n_same_file_collisions += num
+                res.remove(game)
+                res.append(game)
+            else:
+                res.remove(game)
+                other_file = open('rawData/' + game_dict[game])
+                other_file = other_file.read()
+                other_file = other_file.split("\n")
+                num = other_file.count(game)
+                n_collisions += num
+                n_diff_file_collisions += num
+                other_file.remove(game)
+
+        game_temp = game
         if game: # game is not empty string
             game = game.split(" ")
             wins[game[-1][-1]]+=1
@@ -79,6 +102,7 @@ for name in strings:
             elif game[-1][-1] == '*':
                 d_count += 1
                 d_length += len(game) - 1
+        game_dict[game_temp] = name
 
     avg_lengths['x'] = x_length / x_count
     avg_lengths['o'] = o_length / o_count
@@ -113,5 +137,8 @@ df_t3.to_csv('df_t3.csv')
 print(df_t1.to_latex())
 print(df_t2.to_latex())
 print(df_t3.to_latex())
+print('Number of collisions: ' + str(n_collisions))
+print('Number of same file collisions: ' + str(n_same_file_collisions))
+print('Number of different file collisions: ' + str(n_diff_file_collisions))
 
     
