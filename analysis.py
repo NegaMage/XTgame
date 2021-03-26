@@ -12,6 +12,11 @@ strings = [str(i)+"_"+str(j) for i in types for j in types]
 
 # os.system('./a.out < test')
 
+n_collisions = 0
+n_same_file_collisions = 0
+n_diff_file_collisions = 0
+game_dict = dict()
+
 
 
 for i in types:
@@ -30,6 +35,48 @@ for i in types:
     data_t1[str(i)] = []
     data_t2[str(i)] = []
     data_t3[str(i)] = []
+
+
+for name in strings:
+    res = open("rawData/"+name)
+    res = res.read()
+    res = res.split("\n")
+    res = list(res)
+    len1 = len(res)
+    res = set(res)
+    len2 = len(res)
+    print('Number of collisions for strategy combination ' + name + ' :' + str(len2-len1))
+    '''
+    for x in range(len(res)):
+        game = res[x]
+        if game in game_dict.keys():
+            if game_dict[game] == name:
+                for y in range(len(res)):
+                    if res[y] == game  and x != y:
+                        print('Strategy ' + name + ': ' + str(x) + '-' + str(y) + '\n' )
+                num = res.count(game)
+                n_collisions += num
+                n_same_file_collisions += num
+                res.remove(game)
+                res.append(game)
+            else:
+                res.remove(game)
+                other_file = open('rawData/' + game_dict[game])
+                other_file = other_file.read()
+                other_file = other_file.split("\n")
+                for y in range(len(other_file)):
+                    if game == other_file[y]:
+                        print('Strategy ' + name + ': ' + str(x) + '-' + str(y) + '\n')
+                num = other_file.count(game)
+                n_collisions += num
+                n_diff_file_collisions += num
+                other_file.remove(game)
+        game_dict[game] = name
+
+    '''
+    
+
+
 
 for name in strings:
     print("Checking for "+name)
@@ -85,13 +132,13 @@ for name in strings:
     avg_lengths['*'] = d_length / d_count
     
     print("Number of wins:")
-    print(wins)
+    #print(wins)
 
     #print("Number of steps taken:")
     #print(lens)
 
     print(" Average game lengths to win:")
-    print(avg_lengths)
+    #print(avg_lengths)
     x_perc_win = round((wins['x']/(wins['x'] + wins['o'])) * 100.0 , 1)
     o_perc_win = round((wins['o']/(wins['x'] + wins['o'])) * 100.0 , 1)
     draw_perc = round((wins['*']/(wins['x'] + wins['o'] + wins['*'])) * 100.0,1)
@@ -113,5 +160,8 @@ df_t3.to_csv('df_t3.csv')
 print(df_t1.to_latex())
 print(df_t2.to_latex())
 print(df_t3.to_latex())
+print('Number of collisions: ' + str(n_collisions))
+print('Number of same file collisions: ' + str(n_same_file_collisions))
+print('Number of different file collisions: ' + str(n_diff_file_collisions))
 
     
