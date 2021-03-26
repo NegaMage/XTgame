@@ -36,6 +36,41 @@ for i in types:
     data_t2[str(i)] = []
     data_t3[str(i)] = []
 
+
+for name in strings:
+    print("Checking for "+name)
+    res = open("rawData/"+name)
+    res = res.read()
+
+    # print(type(res))
+    res = res.split("\n")
+    for x in range(len(res)):
+        game = res[x]
+        if game in game_dict.keys():
+            if game_dict[game] == name:
+                for y in range(len(res)):
+                    if res[y] == game  and x != y:
+                        print('Strategy ' + name + ': ' + str(x) + '-' + str(y) + '\n' )
+                num = res.count(game)
+                n_collisions += num
+                n_same_file_collisions += num
+                res.remove(game)
+                res.append(game)
+            else:
+                res.remove(game)
+                other_file = open('rawData/' + game_dict[game])
+                other_file = other_file.read()
+                other_file = other_file.split("\n")
+                for y in range(len(other_file)):
+                    if game == other_file[y]:
+                        print('Strategy ' + name + ': ' + str(x) + '-' + str(y) + '\n')
+                num = other_file.count(game)
+                n_collisions += num
+                n_diff_file_collisions += num
+                other_file.remove(game)
+        game_dict[game] = name
+    
+
 for name in strings:
     print("Checking for "+name)
     res = open("rawData/"+name)
@@ -69,26 +104,8 @@ for name in strings:
     o_length = 0
     d_count = 0
     d_length = 0
-    print(res[0])
-    for game in res:
-        if game in game_dict.keys():
-            if game_dict[game] == name:
-                num = res.count(game)
-                n_collisions += num
-                n_same_file_collisions += num
-                res.remove(game)
-                res.append(game)
-            else:
-                res.remove(game)
-                other_file = open('rawData/' + game_dict[game])
-                other_file = other_file.read()
-                other_file = other_file.split("\n")
-                num = other_file.count(game)
-                n_collisions += num
-                n_diff_file_collisions += num
-                other_file.remove(game)
 
-        game_temp = game
+    for game in res:
         if game: # game is not empty string
             game = game.split(" ")
             wins[game[-1][-1]]+=1
@@ -102,20 +119,19 @@ for name in strings:
             elif game[-1][-1] == '*':
                 d_count += 1
                 d_length += len(game) - 1
-        game_dict[game_temp] = name
 
     avg_lengths['x'] = x_length / x_count
     avg_lengths['o'] = o_length / o_count
     avg_lengths['*'] = d_length / d_count
     
     print("Number of wins:")
-    print(wins)
+    #print(wins)
 
     #print("Number of steps taken:")
     #print(lens)
 
     print(" Average game lengths to win:")
-    print(avg_lengths)
+    #print(avg_lengths)
     x_perc_win = round((wins['x']/(wins['x'] + wins['o'])) * 100.0 , 1)
     o_perc_win = round((wins['o']/(wins['x'] + wins['o'])) * 100.0 , 1)
     draw_perc = round((wins['*']/(wins['x'] + wins['o'] + wins['*'])) * 100.0,1)
